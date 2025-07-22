@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { FaInstagram, FaFacebookF, FaYoutube, FaWhatsapp } from "react-icons/fa";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig"; // Adjust if needed
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
-
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -16,26 +17,31 @@ export default function ContactSection() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
 
-    // Reset the form
-    setFormData({
-      fullName: "",
-      phone: "",
-      email: "",
-      interest: "",
-      message: "",
-    });
+    try {
+      await addDoc(collection(db, "contactMessages"), {
+        ...formData,
+        timestamp: new Date()
+      });
 
-    // Hide success message after 3s
+      setFormData({
+        fullName: "",
+        phone: "",
+        email: "",
+        interest: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error("Error submitting to Firestore:", err);
+      alert("Failed to submit message. Try again later.");
+    }
+
     setTimeout(() => setSubmitted(false), 3000);
   };
 
@@ -50,20 +56,18 @@ export default function ContactSection() {
           </p>
         </div>
 
-        {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left - Info */}
+          {/* Left Contact Info */}
           <div className="bg-green-600 text-white rounded-2xl p-8 shadow-lg space-y-6">
             <h3 className="text-2xl font-semibold">Let's Connect</h3>
             <p className="text-white/90">
               Our expert team is ready to help you find the perfect plot for your dream home or investment.
               Get personalized assistance and site visit arrangements.
             </p>
-
             <div className="space-y-4 text-white/90 text-sm">
               <div>
                 <p className="font-semibold">📞 Call Us</p>
-                <a href="tel:+918790670641">+91 996 666 9863</a>
+                <a href="tel:+919966669863">+91 996 666 9863</a>
               </div>
               <div>
                 <p className="font-semibold">📧 Email Us</p>
@@ -80,38 +84,27 @@ export default function ContactSection() {
               <div>
                 <p className="font-semibold">🕒 Office Hours</p>
                 <p>Daily: 10 AM – 7 PM</p>
-                
               </div>
             </div>
 
-            {/* Social Icons */}
             <div className="pt-4">
               <p className="text-white font-medium mb-2">Follow Us:</p>
               <div className="flex gap-4 text-xl">
-                <a href="https://www.instagram.com/saanvika__properties/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80">
-                  <FaInstagram />
-                </a>
-                <a href="https://www.facebook.com/people/Saanvika-Properties/61565686707825/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80">
-                  <FaFacebookF />
-                </a>
-                <a href="https://www.youtube.com/@saanvika_properties-r1m" target="_blank" rel="noopener noreferrer" className="hover:text-white/80">
-                  <FaYoutube />
-                </a>
-                <a href="https://wa.me/919966669863" target="_blank" rel="noopener noreferrer" className="hover:text-white/80">
-                  <FaWhatsapp />
-                </a>
+                <a href="https://www.instagram.com/saanvika__properties/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80"><FaInstagram /></a>
+                <a href="https://www.facebook.com/people/Saanvika-Properties/61565686707825/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80"><FaFacebookF /></a>
+                <a href="https://www.youtube.com/@saanvika_properties-r1m" target="_blank" rel="noopener noreferrer" className="hover:text-white/80"><FaYoutube /></a>
+                <a href="https://wa.me/919966669863" target="_blank" rel="noopener noreferrer" className="hover:text-white/80"><FaWhatsapp /></a>
               </div>
             </div>
           </div>
 
-          {/* Right - Form */}
+          {/* Right Form */}
           <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-200">
             {submitted && (
               <div className="text-green-600 font-medium bg-green-50 border border-green-200 px-4 py-2 rounded-lg text-center">
                 ✅ Your message has been submitted successfully!
               </div>
             )}
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name *</label>
@@ -120,9 +113,9 @@ export default function ContactSection() {
                   type="text"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="Your full name"
                   required
+                  placeholder="Your full name"
+                  className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
               <div>
@@ -132,13 +125,12 @@ export default function ContactSection() {
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="+91 98765 43210"
                   required
+                  placeholder="+91 98765 43210"
+                  className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700">Email Address *</label>
               <input
@@ -146,12 +138,11 @@ export default function ContactSection() {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="you@email.com"
                 required
+                placeholder="you@email.com"
+                className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700">Interest In</label>
               <select
@@ -166,7 +157,6 @@ export default function ContactSection() {
                 <option value="Site Visit">Site Visit</option>
               </select>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700">Message</label>
               <textarea
@@ -174,11 +164,10 @@ export default function ContactSection() {
                 rows="4"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Any specific requirements or questions?"
+                className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
-
             <button
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition"
