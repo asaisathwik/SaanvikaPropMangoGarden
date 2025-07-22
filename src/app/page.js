@@ -2,102 +2,28 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="relative">
+      {/* WhatsApp Floating Button with 3D Effect */}
+      <a
+        href="https://wa.me/919966669863"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 rounded-full p-3 bg-green-500 shadow-2xl hover:bg-green-600 transform hover:scale-110 hover:-translate-y-1 transition-all duration-300 ease-in-out border-2 border-white"
+        style={{
+          boxShadow:
+            "0 8px 15px rgba(0, 128, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          fill="white"
+          viewBox="0 0 24 24"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <path d="M12.04 0C5.389 0 0 5.392 0 12.04c0 2.122.555 4.19 1.605 6.02L.055 24l6.087-1.575A11.94 11.94 0 0 0 12.04 24C18.69 24 24 18.607 24 11.96S18.691 0 12.04 0zm0 21.913a9.832 9.832 0 0 1-5.013-1.375l-.36-.214-3.617.935.967-3.526-.234-.366a9.856 9.856 0 0 1-1.51-5.236c0-5.442 4.425-9.868 9.867-9.868 5.44 0 9.867 4.426 9.867 9.868s-4.427 9.867-9.867 9.867zm5.408-7.392c-.297-.149-1.757-.867-2.029-.966-.273-.099-.472-.149-.67.15-.198.297-.767.966-.94 1.163-.173.198-.347.223-.644.075-.297-.149-1.254-.462-2.388-1.475-.883-.786-1.48-1.758-1.653-2.055-.173-.297-.019-.458.13-.606.134-.133.298-.347.446-.52.148-.173.198-.297.298-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.614-.916-2.21-.241-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.075-.793.372s-1.042 1.016-1.042 2.475 1.066 2.872 1.213 3.07c.149.198 2.1 3.2 5.09 4.487.711.306 1.264.489 1.697.625.713.226 1.362.194 1.875.118.572-.085 1.757-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347z"/>
+        </svg>
+      </a>
     </div>
   );
 }
