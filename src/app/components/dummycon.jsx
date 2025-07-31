@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { FaInstagram, FaFacebookF, FaYoutube, FaWhatsapp } from "react-icons/fa";
-import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
@@ -22,55 +21,32 @@ export default function ContactSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Prepare email template params
-    const templateParams = {
-      fullName: formData.fullName,
-      phone: formData.phone,
-      email: formData.email,
-      interest: formData.interest || "Not specified",
-      message: formData.message || "No message",
-    };
-
-    setSubmitted(true);
-
-    // Send email using EmailJS
-    emailjs
-      .send(
-        "service_mqxacar", // Replace with your EmailJS service ID
-        "template_smgx2ne", // Replace with your EmailJS template ID
-        templateParams,
-        "ErI8jVAUg8MqWdzaZ" // Replace with your EmailJS public key
-      )
-      .then(() => {
-        // After email success, redirect to WhatsApp
-        const message = `Name: ${formData.fullName}
+    // User entered data message
+    const message = `Name: ${formData.fullName}
 Phone: ${formData.phone}
 Email: ${formData.email}
 Interest: ${formData.interest || "Not specified"}
-Message: ${formData.message || "No message"}`;
+Message: ${formData.message || "No message"}
+    `;
 
-        const whatsappNumber = "919966669863";
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(
-          message
-        )}`;
-        window.open(whatsappUrl, "_blank");
+    // WhatsApp redirect
+    const whatsappNumber = "919966669863";
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
 
-        // Reset form after sending
-        setFormData({
-          fullName: "",
-          phone: "",
-          email: "",
-          interest: "",
-          message: "",
-        });
+    window.open(whatsappUrl, "_blank");
 
-        setTimeout(() => setSubmitted(false), 3000);
-      })
-      .catch((err) => {
-        console.error("EmailJS Error:", err);
-        alert("Failed to send email. Please try again.");
-        setSubmitted(false);
-      });
+    setSubmitted(true);
+
+    // Reset form after sending
+    setFormData({
+      fullName: "",
+      phone: "",
+      email: "",
+      interest: "",
+      message: "",
+    });
+
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
@@ -115,42 +91,19 @@ Message: ${formData.message || "No message"}`;
             <div className="pt-4">
               <p className="text-white font-medium mb-2">Follow Us:</p>
               <div className="flex gap-4 text-xl">
-                <a
-                  href="https://www.instagram.com/saanvika__properties/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  href="https://www.facebook.com/people/Saanvika-Properties/61565686707825/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebookF />
-                </a>
-                <a
-                  href="https://www.youtube.com/@saanvika_properties-r1m"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaYoutube />
-                </a>
-                <a href="https://wa.me/919966669863" target="_blank" rel="noopener noreferrer">
-                  <FaWhatsapp />
-                </a>
+                <a href="https://www.instagram.com/saanvika__properties/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+                <a href="https://www.facebook.com/people/Saanvika-Properties/61565686707825/" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+                <a href="https://www.youtube.com/@saanvika_properties-r1m" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+                <a href="https://wa.me/919966669863" target="_blank" rel="noopener noreferrer"><FaWhatsapp /></a>
               </div>
             </div>
           </div>
 
           {/* Contact Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-200"
-          >
+          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-gray-200">
             {submitted && (
               <div className="text-green-600 font-medium bg-green-50 border border-green-200 px-4 py-2 rounded-lg text-center">
-                ✅ Sending your message...
+                ✅ Redirecting you to WhatsApp...
               </div>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -220,7 +173,7 @@ Message: ${formData.message || "No message"}`;
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition"
             >
-              🚀 Send Message
+              🚀 Send Message on WhatsApp
             </button>
           </form>
         </div>
